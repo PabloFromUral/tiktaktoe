@@ -1,5 +1,8 @@
 package tictactoe;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class Main {
     public static char[][] map;
     public static final int SIZE = 3;
@@ -33,8 +36,39 @@ public class Main {
         }
         System.out.println();
     }
+
     public static void main(String[] args) {
         initMap();
         printMap();
+    }
+
+    public static Scanner sc = new Scanner(System.in);
+
+    public static void humanTurn() {
+        int x, y;
+        do {
+            System.out.println("Введите координаты в формате X Y");
+            x = sc.nextInt() - 1;
+            y = sc.nextInt() - 1;
+        } while (!isCellValid(x, y));
+        map[y][x] = DOT_X;
+    }
+
+    public static boolean isCellValid(int x, int y) {
+        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) return false;
+        if (map[y][x] == DOT_EMPTY) return true;
+        return false;
+    }
+
+    public static Random rand = new Random();
+
+    public static void aiTurn() {
+        int x, y;
+        do {
+            x = rand.nextInt(SIZE);
+            y = rand.nextInt(SIZE);
+        } while (!isCellValid(x, y));
+        System.out.println("Компьютер походил в точку " + (x + 1) + " " + (y + 1));
+        map[y][x] = DOT_O;
     }
 }
